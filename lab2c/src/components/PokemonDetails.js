@@ -1,4 +1,4 @@
-const PokemonDetails = ({ data }) => {
+function PokemonDetails({ data }) {
   const types = data.types.map((type) => type.type.name).join(", ");
   const stats = data.stats
     .map((stat) => `${stat.stat.name}: ${stat.base_stat}`)
@@ -15,4 +15,4 @@ const PokemonDetails = ({ data }) => {
       <img src={data.sprites.front_default} alt={data.name} />
     </div>
   );
-};
+}

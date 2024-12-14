@@ -1,29 +1,20 @@
-const PokemonList = ({ data }) => {
-  const [pokemonDetails, setPokemonDetails] = useState([]);
-
-  useEffect(() => {
-    const fetchPokemonDetails = async () => {
-      const details = await Promise.all(
-        data.results.map(async (pokemon) => {
-          const response = await fetch(pokemon.url);
-          return response.json();
-        })
-      );
-      setPokemonDetails(details);
-    };
-
-    fetchPokemonDetails();
-  }, [data]);
-
+function PokemonList({ data, onPokemonClick }) {
   return (
     <div className="pokemon-list">
-      {pokemonDetails.map((pokeData) => (
-        <button key={pokeData.id} className="pokemon-item" data-name={pokeData.name}>
-          <h3>{pokeData.name}</h3>
-          <p>Number in the pokedex: {pokeData.id}</p>
-          <img src={pokeData.sprites.front_default} alt={pokeData.name} />
+      {data.map((pokemon) => (
+        <button
+          key={pokemon.id}
+          className="pokemon-item"
+          onClick={() => onPokemonClick(pokemon.name)}
+        >
+          <h3>{pokemon.name}</h3>
+          <p>Number in the pokedex: {pokemon.id}</p>
+          <img
+            src={pokemon.sprites.front_default}
+            alt={pokemon.name}
+          />
         </button>
       ))}
     </div>
   );
-};
+}

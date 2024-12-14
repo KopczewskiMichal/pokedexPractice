@@ -75,11 +75,14 @@
     }
   }
   
-  .pokeList {
+  .main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+  }
+
+  .pokemon-list {
+    gap: 2rem;
   }
   
   .pokemon-item {
@@ -147,20 +150,26 @@
   }
   
   .loader {
-    display: none;
     position: fixed;
-    top: 45%;
-    left: 46%;
-    color: #3498db;
-    animation: spin 1s linear infinite;
+    top: 50%; /* Centruj pionowo */
+    left: 50%; /* Centruj poziomo */
+    transform: translate(-50%, -50%); /* Poprawne centrowanie */
+    color: #3498db; /* Kolor ikony */
+    display: none; /* Ukryty domyślnie */
   
     i {
-      font-size: 10rem;
+      font-size: 10rem; /* Rozmiar ikony */
+      animation: spin 1s linear infinite; /* Obracanie ikony */
     }
   }
   
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg); /* Początek obrotu */
+    }
+    100% {
+      transform: rotate(360deg); /* Pełny obrót */
+    }
   }
+  
   

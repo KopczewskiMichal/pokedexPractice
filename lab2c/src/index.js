@@ -1,47 +1,56 @@
 function App() {
-  async function get20Pokemon() {
+  let isLoading = false;
+  let pokemonList = [];
+  let selectedPokemon = null;
+
+  function fetchPokemonList() {
+    showLoader();
     const url = "https://pokeapi.co/api/v2/pokemon";
-
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-
-      const json = await response.json();
-      PokemonList(json);
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    } catch (error) {
-      console.error(error.message);
-    }
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        pokemonList = data.results;
+        selectedPokemon = null;
+        renderApp();
+      })
+      .then(new Promise((resolve) => setTimeout(resolve, 2000)))
+      .catch((error) => console.error("Error fetching Pokémon list:", error))
+      .finally(hideLoader());
   }
-  async function getData(pokemonName) {
-    searchInput = pokemonName;
-    const url = `https://pokeapi.co/api/v2/pokemon/${searchInput}`;
 
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-
-      const json = await response.json();
-
-    //   await new Promise((resolve) => setTimeout(resolve, 500));
-
-      PokemonDetails(json);
-
-    } catch (error) {
-      console.error(error.message);
-    }
+  function fetchPokemonDetails(pokemonName) {
+    showLoader();
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+    fetch(url)
+      .then(new Promise((resolve) => setTimeout(resolve, 2000)))
+      .then((response) => response.json())
+      .then((data) => {
+        selectedPokemon = data;
+        renderApp();
+      })
+      .catch((error) => console.error("Error fetching Pokémon details:", error))
+      .finally(hideLoader());
   }
 
   function returnHome() {
-    get20Pokemon();
+    fetchPokemonList();
   }
 
-  function findPokemon() {
-    getData();
+  function findPokemon(searchInput) {
+    const pokemonName = searchInput.toLowerCase();
+    if (pokemonName) {
+      fetchPokemonDetails(pokemonName);
+    }
+  }
+
+  function showLoader() {
+    isLoading = true;
+    renderApp();
+  }
+
+  function hideLoader() {
+    isLoading = false;
+    renderApp();
   }
 
   function renderApp() {
@@ -49,15 +58,25 @@ function App() {
       <div className="body">
         <Header returnHome={returnHome} findPokemon={findPokemon} />
         <div className="main">
-          <PokemonList />
-          <PokemonDetails details={getData} />
+          {isLoading && (
+            <div className="loader">
+              <i className="fa fa-spinner"></i>
+            </div>
+          )}
+          {selectedPokemon ? (
+            <PokemonDetails data={selectedPokemon} />
+          ) : (
+            <PokemonList
+              data={pokemonList}
+              onPokemonClick={fetchPokemonDetails}
+            />
+          )}
         </div>
       </div>,
       document.getElementById("root")
     );
   }
 
-  get20Pokemon();
+  fetchPokemonList();
 }
-
-ReactDOM.render(<App />, document.getElementById("root"));
+App();

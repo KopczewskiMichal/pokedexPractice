@@ -3,33 +3,40 @@ function App() {
   let pokemonList = [];
   let selectedPokemon = null;
 
-  function fetchPokemonList() {
+  async function fetchPokemonList() {
     showLoader();
     const url = "https://pokeapi.co/api/v2/pokemon";
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        pokemonList = data.results;
-        selectedPokemon = null;
-        renderApp();
-      })
-      .then(new Promise((resolve) => setTimeout(resolve, 2000)))
-      .catch((error) => console.error("Error fetching Pokémon list:", error))
-      .finally(hideLoader());
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      const detailedPokemonList = await Promise.all(
+        data.results.map(async (pokemon) => {
+          const pokemonDetailsResponse = await fetch(pokemon.url);
+          return pokemonDetailsResponse.json();
+        })
+      );
+
+      pokemonList = detailedPokemonList;
+      selectedPokemon = null;
+    } catch (error) {
+      console.error("Error fetching Pokémon list:", error);
+    } finally {
+      hideLoader();
+    }
   }
 
   function fetchPokemonDetails(pokemonName) {
     showLoader();
     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
     fetch(url)
-      .then(new Promise((resolve) => setTimeout(resolve, 2000)))
       .then((response) => response.json())
       .then((data) => {
         selectedPokemon = data;
         renderApp();
       })
       .catch((error) => console.error("Error fetching Pokémon details:", error))
-      .finally(hideLoader());
+      .finally(hideLoader);
   }
 
   function returnHome() {

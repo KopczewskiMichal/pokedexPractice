@@ -8,66 +8,66 @@ body {
 }
 
 header {
+  align-items: center;
+  background-color: #100c0c;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 1rem;
   position: sticky;
   top: 0;
   z-index: 99;
-  background-color: #100c0c;
 }
 
 .searchbar {
+  align-items: center; 
   display: flex;
   justify-content: center;
-  align-items: center; 
   width: 30rem;
 }
 
 .homeButton {
-  border-radius: 25px;
-  padding: 0.5rem;
-  border: none;
   background-color: #121212;
+  border-radius: 25px;
+  border: none;
   color: #d0d0d0;
+  padding: 0.5rem;
   transition: background-color 0.8s ease, color 0.8s ease;
 
   &:hover {
-    cursor: pointer;
     background-color: #272727;
+    cursor: pointer;
   }
 }
 
 .searchFor {
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
-  padding: 0.5rem 1rem;
   background-color: #121212;
+  border-bottom-left-radius: 25px;
+  border-top-left-radius: 25px;
   border: 1px solid #a0a0a0;
+  color: #d0d0d0;
   flex-grow: 1;
   font-size: 1rem;
-  color: #d0d0d0;
+  padding: 0.5rem 1rem;
 
   &:active,
   &:focus {
-    outline: none;
     box-shadow: none;
+    outline: none;
   }
 }
 
 .searchButton {
-  border-top-right-radius: 25px;  
-  border-bottom-right-radius: 25px; 
+  align-items: center;
   background-color: #222222;
-  color: #d0d0d0;
-  border: 1px solid #a0a0a0;
+  border-bottom-right-radius: 25px; 
   border-left: none;
-  padding: 0.65rem; 
+  border-top-right-radius: 25px;  
+  border: 1px solid #a0a0a0;
+  color: #d0d0d0;
   cursor: pointer;
   display: flex;
-  align-items: center;
   justify-content: center;
+  padding: 0.65rem; 
   transition: background-color 0.3s ease;
 
   .fa-solid {
@@ -76,34 +76,34 @@ header {
 }
 
 .main {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
   
 }
 
 .pokemon-list {
   display: flex;
-  gap: 2rem;
   flex-direction: column;
+  gap: 2rem;
 }
 
 .pokemon-item {
-  width: 40rem;
-  height: 40rem;
-  border-radius: 25px;
+  align-items: center;
   background-color: #272727;
+  border-radius: 25px;
   border: none;
   color: white;
-  transition: background-color 0.8s ease, color 0.8s ease;
   display: flex;
   flex-direction: column-reverse;
-  align-items: center;
+  height: 40rem;
   justify-content: space-evenly;
+  transition: background-color 0.8s ease, color 0.8s ease;
+  width: 40rem;
 
   &:hover {
-    cursor: pointer;
     background-color: #3f3f3f;
+    cursor: pointer;
   }
 
   h3 {
@@ -116,22 +116,22 @@ p {
 }
 
 img {
-  width: 320px;
   height: auto;
+  width: 320px;
 }
 
 .pokemon-details {
-  width: 100vh;
-  height: auto;
-  border-radius: 25px;
+  align-items: center;
   background-color: #272727;
+  border-radius: 25px;
   border: none;
   color: white;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column-reverse;
+  height: auto;
+  justify-content: center;
   padding: 1rem;
+  width: 100vh;
 
   h2, p {
     margin: 10px 0;
@@ -144,15 +144,15 @@ img {
 }
 
 .loader {
+  color: #3498db;
+  left: 50%;
   position: fixed;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
-  color: #3498db;
 
   i {
-    font-size: 10rem;
     animation: spin 1s linear infinite;
+    font-size: 10rem;
   }
 }
 

@@ -9,10 +9,7 @@ function PokemonList({ data, onPokemonClick }) {
         >
           <h3>{pokemon.name}</h3>
           <p>Number in the pokedex: {pokemon.id}</p>
-          <img
-            src={pokemon.sprites.front_default}
-            alt={pokemon.name}
-          />
+          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
         </button>
       ))}
     </div>

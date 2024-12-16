@@ -40,7 +40,9 @@ export default function Home() {
   async function fetchPokemonDetails(pokemonName) {
     setIsLoading(true);
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+      );
       const data = await response.json();
       setSelectedPokemon(data);
     } catch (error) {
@@ -69,7 +71,10 @@ export default function Home() {
         {selectedPokemon ? (
           <PokemonDetails data={selectedPokemon} />
         ) : (
-          <PokemonList data={pokemonList} onPokemonClick={fetchPokemonDetails} />
+          <PokemonList
+            data={pokemonList}
+            onPokemonClick={fetchPokemonDetails}
+          />
         )}
       </div>
     </div>

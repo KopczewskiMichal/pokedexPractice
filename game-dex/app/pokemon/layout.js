@@ -1,22 +1,29 @@
-import { Geist, Geist_Mono } from "next/font/google";
+"use client";
+
 import "../globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Header from "../components/Header";
+import { useRouter } from "next/navigation";
 
 export default function Layout({ children }) {
-    return (
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          {children}
-        </body>
-      </html>
-    );
+  const router = useRouter();
+
+  function returnHome() {
+    router.push("/pokemon");
   }
+
+  function findPokemon(searchInput) {
+    const pokemonName = searchInput.toLowerCase();
+    if (pokemonName) {
+      router.push(`/pokemon/${pokemonName}`);
+    }
+  }
+
+  return (
+    <html lang="en">
+      <body className={"box"}>
+        <Header returnHome={returnHome} findPokemon={findPokemon} />
+        {children}
+      </body>
+    </html>
+  );
+}

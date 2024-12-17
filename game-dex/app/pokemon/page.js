@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Header from "../components/Header";
 import PokemonList from "../components/PokemonList";
-import PokemonDetails from "../components/PokemonDetails";
 import Loader from "../components/Loader";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [pokemonList, setPokemonList] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
@@ -45,6 +45,7 @@ export default function Home() {
       );
       const data = await response.json();
       setSelectedPokemon(data);
+      router.push(`/pokemon/${pokemonName}`);
     } catch (error) {
       console.error("Error fetching Pokémon details:", error);
     } finally {
@@ -52,30 +53,12 @@ export default function Home() {
     }
   }
 
-  function returnHome() {
-    fetchPokemonList();
-  }
-
-  function findPokemon(searchInput) {
-    const pokemonName = searchInput.toLowerCase();
-    if (pokemonName) {
-      fetchPokemonDetails(pokemonName);
-    }
-  }
-
   return (
     <div className="body">
-      <Header returnHome={returnHome} findPokemon={findPokemon} />
       <div className="main">
         {isLoading && <Loader />}
-        {selectedPokemon ? (
-          <PokemonDetails data={selectedPokemon} />
-        ) : (
-          <PokemonList
-            data={pokemonList}
-            onPokemonClick={fetchPokemonDetails}
-          />
-        )}
+        (
+        <PokemonList data={pokemonList} onPokemonClick={fetchPokemonDetails} />)
       </div>
     </div>
   );
